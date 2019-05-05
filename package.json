@@ -1,0 +1,23 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "NODE_ENV=production electron .",
+    "dev": "electron .",
+    "build-linux": "electron-packager . shopping-list --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "build-windows": "electron-packager . shopping-list --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=ShoppingList",
+    "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^4.1.4",
+    "materialize-css": "^1.0.0-rc.2"
+  },
+  "devDependencies": {
+    "electron-packager": "^13.1.1"
+  }
+}

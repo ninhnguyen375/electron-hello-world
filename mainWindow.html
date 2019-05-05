@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="node_modules/materialize-css/dist/css/materialize.min.css"
+    />
+    <title>ShoppingList</title>
+    <style>
+      .float-right {
+        float: right;
+      }
+      .flex-grow-1 {
+        flex-grow: 1;
+      }
+      .d-flex {
+        display: flex;
+      }
+      .flex-v-center {
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav-wrapper grey darken-4">
+      <a class="brand-logo center">Shopping List Ninh Dep Trai</a>
+    </nav>
+    <ul id="listItem"></ul>
+
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script>
+      const electron = require('electron');
+      const { ipcRenderer } = electron;
+      const listItem = document.querySelector('#listItem');
+      // Add item
+      ipcRenderer.on('item:add', (e, item) => {
+        const li = document.createElement('li');
+        const removeBtn = document.createElement('button');
+        const itemText = document.createElement('div');
+
+        listItem.className = 'collection';
+        li.className = 'collection-item d-flex flex-v-center';
+        removeBtn.className = 'waves-effect waves-light red btn';
+        itemText.className = 'flex-grow-1';
+
+        itemText.appendChild(document.createTextNode(item));
+        removeBtn.appendChild(document.createTextNode('REMOVE'));
+
+        removeBtn.addEventListener('click', removeItem(li));
+
+        li.appendChild(itemText);
+        li.appendChild(removeBtn);
+        listItem.appendChild(li);
+      });
+
+      // Clear item
+      ipcRenderer.on('item:clear', (e, item) => {
+        listItem.innerHTML = '';
+        listItem.className = '';
+      });
+
+      const removeItem = e => () => {
+        e.remove();
+        if (listItem.children.length === 0) {
+          listItem.className = '';
+        }
+      };
+    </script>
+  </body>
+</html>
